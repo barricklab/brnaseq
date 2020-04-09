@@ -1,37 +1,39 @@
-# brnaseq
-Basic analysis of bacterial RNAseq data for differential gene expression
+# _brnaseq_
+Basic analysis of bacterial RNAseq data for differential gene expression.
 
-## Materials and Software
 
-* Data files
+## Materials
+* Read files
  * RNA-Seq data in FASTQ format (Ex: dataset1.fastq, dataset2.fastq)
-* Genome sequence files
- * Genome sequence in FASTA format (Ex: REL606.fna)
- * Genome sequence gene annotations in GFF3 format (Ex: REL606.gff3)
-* Adaptor filtering software
+* Reference files
+ * Genome sequence in GenBank or GFF3 format (Ex: REL606.gbk)
+
+## Software
+* Adaptor filtering (Trimmomatic)
  * [Download Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)
  * Use this [protocol](https://barricklab.org/twiki/bin/view/Lab/ProtocolsTrimmomaticCommands).
-* Read mapping software
- * Bowtie2
+* Read mapping (Bowtie2)
   * [Download Bowtie2](http://bowtie-bio.sourceforge.net/bowtie2)
   * Download an executable for your platform
   * Add this directory to your $PATH or move bowtie, and bowtie-* star executable to your $PATH
-* _breseq_ and included _gdtools_
+* Sequence conversion and runfule generation (_breseq_ and _gdtools_)
   * [Download and install breseq](http://barricklab.org/breseq)
-* htseq python module and scripts
+* Read counting (htseq)
+  * Python3
   * Install using pip
-* R statistics package
+* Differential gene expression (DEseq2)
   * [Download and install R](http://cran.r-project.org/)
-* Bioconductor R modules
-  * library(deseq2)
-* <code>brnaseq</code> script
+  * Bioconductor R modules
+    * library(deseq2)
+* These _brnaseq_ scripts
+  * Put them into your `$PATH`.
   * [Download from Github](https://github.com/barricklab/barricklab/blob/master/brnaseq).
 
 ## Procedure
 
 ### Create <code>genomediff</code> metadata files
 
-The files should contain information about the reads and the
+The files should contain information about the reads and the references used in the analysis.
 
 ```
 Example
