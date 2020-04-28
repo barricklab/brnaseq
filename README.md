@@ -74,11 +74,25 @@ And convert to BAM format (assumes single-end data):
 ```
 samtools faidx REL606.fna
 samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
-samtools sort --threads 4 -o datasetX.bam datasetX.unsorted.bam
+samtools sort --threads 8 -o datasetX.bam datasetX.unsorted.bam
 samtools index datasetX.bam
 ```
 
 Now you can use IGV to view them.
+
+### Plotting coverage
+
+Extract R1, sort and index; Index FASTA reference
+```
+samtools faidx reference.fna
+samtools view -hbf 64 aligned.paired.sam > unsorted_R1.bam
+samtools sort --threads 8 -o sorted_R1.bam unsorted_R1.bam
+samtools index datasetX.bam
+```
+Plot to table file
+```
+breseq BAM2COV -b sorted_R1.bam -f reference.fna -t -p 0 <seq_id:start-end>
+```
 
 ## Citations
 
