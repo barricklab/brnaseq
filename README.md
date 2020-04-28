@@ -70,11 +70,13 @@ MetaCyc
 
 ### View reads in IGV
 
-And convert to BAM format (assumes single-end data):  %BR%
-<code>$samtools faidx REL606.fna </code> %BR%
-<code>$samtools import REL606.fna datasetX.sam datasetX.unsorted.bam </code> %BR%
-<code>$samtools sort datasetX.unsorted.bam datasetX </code> %BR%
-<code>$samtools index datasetX.bam </code> %BR%
+And convert to BAM format (assumes single-end data):
+```
+$samtools faidx REL606.fna
+$samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
+$samtools sort datasetX.unsorted.bam datasetX
+$samtools index datasetX.bam
+```
 
 Now you can use IGV to view them.
 
