@@ -72,10 +72,10 @@ MetaCyc
 
 And convert to BAM format (assumes single-end data):
 ```
-$samtools faidx REL606.fna
-$samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
-$samtools sort datasetX.unsorted.bam datasetX
-$samtools index datasetX.bam
+samtools faidx REL606.fna
+samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
+samtools sort --threads 4 -o datasetX.bam datasetX.unsorted.bam
+samtools index datasetX.bam
 ```
 
 Now you can use IGV to view them.
