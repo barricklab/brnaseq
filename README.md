@@ -56,7 +56,7 @@ brnaseq
 differential_gene_expression.R
 ```
 
-For an explanation of the methods [[http://bioconductor.org/packages/devel/bioc/html/DESeq.html][Manual and Instructions]]
+For an explanation of the methods: [Manual and Instructions](http://bioconductor.org/packages/devel/bioc/html/DESeq.html)
 
 ### Graph data for a specific gene
 
@@ -66,7 +66,8 @@ graph_gene_counts.R
 
 ### Examine enrichment in certain gene categories
 
-MetaCyc
+* MetaCyc
+* [clusterProfiler R package](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)
 
 ### View reads in IGV
 
