@@ -64,7 +64,7 @@ gdtools RUNFILE --preserve-pairs --executable brnaseq --options "-j 12 -k"
 differential_gene_expression.R
 ```
 
-For an explanation of the methods [[http://bioconductor.org/packages/devel/bioc/html/DESeq.html][Manual and Instructions]]
+For an explanation of the methods: [Manual and Instructions](http://bioconductor.org/packages/devel/bioc/html/DESeq.html)
 
 ### Graph data for a specific gene
 
@@ -74,7 +74,8 @@ graph_gene_counts.R
 
 ### Examine enrichment in certain gene categories
 
-MetaCyc
+* MetaCyc
+* [clusterProfiler R package](https://bioconductor.org/packages/release/bioc/html/clusterProfiler.html)
 
 ### View reads in IGV
 
@@ -84,13 +85,28 @@ reads on the correct strand? Are there the mutations you expect in a certain str
 
 And convert to BAM format (assumes single-end data):
 ```
-samtools faidx reference.fna
+samtools faidx REL606.fna
 samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
-samtools sort --threads 4 datasetX.unsorted.bam > datasetX.bam
+samtools sort --threads 8 -o datasetX.bam datasetX.unsorted.bam
 samtools index datasetX.bam
 ```
 
 Now you can use IGV to view them!
+
+### Plotting coverage
+
+Extract R1, sort and index; Index FASTA reference
+```
+samtools faidx reference.fna
+samtools view -hbf 64 aligned.paired.sam > unsorted_R1.bam
+samtools sort --threads 8 -o sorted_R1.bam unsorted_R1.bam
+samtools index datasetX.bam
+```
+
+Plot to table file
+```
+breseq BAM2COV -b sorted_R1.bam -f reference.fna -t -p 0 <seq_id:start-end>
+```
 
 ## Citations
 
