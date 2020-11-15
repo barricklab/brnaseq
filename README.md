@@ -44,10 +44,18 @@ Example
 
 Use this [protocol](https://barricklab.org/twiki/bin/view/Lab/ProtocolsTrimmomaticCommands).
 
+```
+gdtools RUNFILE --mode  trimmomatic-PE-unique --preserve-pairs
+```
+
 ### Run brnaseq
 
 ```
 brnaseq
+```
+
+```
+gdtools RUNFILE --preserve-pairs --executable brnaseq --options "-j 12 -k"
 ```
 
 ### Analyze differential gene expression
@@ -70,13 +78,19 @@ MetaCyc
 
 ### View reads in IGV
 
-And convert to BAM format (assumes single-end data):  %BR%
-<code>$samtools faidx REL606.fna </code> %BR%
-<code>$samtools import REL606.fna datasetX.sam datasetX.unsorted.bam </code> %BR%
-<code>$samtools sort datasetX.unsorted.bam datasetX </code> %BR%
-<code>$samtools index datasetX.bam </code> %BR%
+You should always inspect your data at the nucleotide level to see if there are
+indications that an analysis has gone awry. For example, are all of the forward
+reads on the correct strand? Are there the mutations you expect in a certain strain there?
 
-Now you can use IGV to view them.
+And convert to BAM format (assumes single-end data):
+```
+samtools faidx reference.fna
+samtools import REL606.fna datasetX.sam datasetX.unsorted.bam
+samtools sort --threads 4 datasetX.unsorted.bam > datasetX.bam
+samtools index datasetX.bam
+```
+
+Now you can use IGV to view them!
 
 ## Citations
 
