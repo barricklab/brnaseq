@@ -21,6 +21,7 @@ Basic analysis of bacterial RNAseq data for differential gene expression.
 * Read counting (htseq)
   * Python3
   * Install using pip
+  * Can install with bioconda (use 0.12.4 to avoid Pythion incompatibilities)
 * Differential gene expression (DEseq2)
   * [Download and install R](http://cran.r-project.org/)
   * Bioconductor R modules

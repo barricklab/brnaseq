@@ -21,11 +21,22 @@ you should use the 'trimmomatic-PE-unique' mode with the --preserve-pairs option
 ensures that (1) the files of read pairs are actually pairs and (2) each read *pair*,
 rather than read, only gets counted once.
 
-You can generate a commands file for trimming on TACC by using a gdtools command like this:
-$ gdtools RUNFILE -m trimmomatic-PE-unique --preserve-pairs --options "-threads 48" 
+You can generate a commands file for trimming on TACC by using a gdtools commands like these...
 
-You can generate a commands file for running these commands on TACC by using a gdtools command like this:
+... for paired-end data:
+$ gdtools RUNFILE -m trimmomatic-PE-unique --preserve-pairs --options "-threads 48"
+
+... for single-end data:
+$ gdtools RUNFILE -m trimmomatic --preserve-pairs --options "-threads 48"
+
+You can generate a commands file for running these commands on TACC by using a gdtools command like these...
+
+.. for paired-end data
 $ gdtools RUNFILE --preserve-pairs --executable brnaseq --options "-j 48"
+
+... for single-end data:
+$ gdtools RUNFILE --executable brnaseq --options "-j 48"
+
 
 Or run this command on all samples for brnaseq to work correctly:
 brnaseq -j 48 -g 01_Data/<sample>.gd -o 03_Output/<sample> -r 02_Downloads/REL606.gff `ls 02_Trimmed/<sample>*` &> 04_Logs/<sample>.log
@@ -66,7 +77,7 @@ Do not delete intermediate files when done with them. Used for debugging.
 
 =item B<--count-all|-a>
 
-Count reads that can be aligned/assigned to more than one gene for all of them. HTSeq setting --nonunique none is used by default. 
+Count reads that can be aligned/assigned to more than one gene for all of them. HTSeq setting --nonunique none is used by default.
 Setting this flag makes uses --nonunique all instead.
 
 =item B<--data|-d>
@@ -182,15 +193,21 @@ if ("\U$ARGV[0]" eq "FINISH") {
 	#Now we look for the corresponding trim log files
 	foreach my $data_dir_name (@data_dir_names) {
 
-		open FILE, "<$trim_logs_path/$data_dir_name.log" or die "Can't open file: $trim_logs_path/$data_dir_name.log";
-		my $file_content = do { local $/; <FILE> };
-		$file_content =~ m/Input Read Pairs: (\d+) Both Surviving: (\d+) .+Forward Only Surviving: (\d+) .+Reverse Only Surviving: (\d+) .+Dropped: (\d+)/;
-		push @{$stat_output_cols[0]}, $1;
-		push @{$stat_output_cols[1]}, $2;
-		push @{$stat_output_cols[2]}, $3;
-		push @{$stat_output_cols[3]}, $4;
-		push @{$stat_output_cols[4]}, $5;
-		print "$1 $2 $3 $4\n";
+		my $open_success = open FILE, "<$trim_logs_path/$data_dir_name.log";
+
+		if ($open_success) {
+			my $file_content = do { local $/; <FILE> };
+			$file_content =~ m/Input Read Pairs: (\d+) Both Surviving: (\d+) .+Forward Only Surviving: (\d+) .+Reverse Only Surviving: (\d+) .+Dropped: (\d+)/;
+			push @{$stat_output_cols[0]}, $1;
+			push @{$stat_output_cols[1]}, $2;
+			push @{$stat_output_cols[2]}, $3;
+			push @{$stat_output_cols[3]}, $4;
+			push @{$stat_output_cols[4]}, $5;
+			print "$1 $2 $3 $4\n";
+		}
+		else {
+			print "Did not find file $trim_logs_path/$data_dir_name.log\n"
+		}
 
 	}
 

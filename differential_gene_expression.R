@@ -30,7 +30,7 @@ counts = counts %>% select(-locus_tag)
 
 # Load metadata, it must have 'id' and 'treatment' columns 
 metadata = read.csv(opt$metadata)
-if (exists(metadata$biorep)) {
+if (exists("metadata$biorep")) {
   metadata$biorep = as.factor(metadata$biorep)
 }
 metadata$treatment = factor(metadata$treatment)
@@ -55,6 +55,9 @@ res$locus_tag = row.names(res)
 res = res %>% left_join(genedata, by="locus_tag")
 
 res = res %>% select(locus_tag, everything())
+
+res$normalizedBaseMean = res$baseMean / (res$end - res$start + 1)
+
 write.csv(res, "differential_expression.csv", row.names=F)
 write_tsv(res, "differential_expression.tsv")
 
